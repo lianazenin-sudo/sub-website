@@ -1,0 +1,8 @@
+{
+  "name": "trace-monorepo",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
+}
