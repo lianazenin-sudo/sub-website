@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Monorepo root install artifacts (eslint may run with a wider cwd).
+    "../../node_modules/**",
+    "../../packages/**",
   ]),
 ]);
 
