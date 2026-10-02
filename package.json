@@ -4,5 +4,11 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "scripts": {
+    "dev:website": "npm run dev --workspace=@trace/website",
+    "build:website": "npm run build --workspace=@trace/website",
+    "lint": "npm run lint --workspace=@trace/website",
+    "dev:mobile": "echo \"apps/mobile is not created yet (step 7)\""
+  }
 }

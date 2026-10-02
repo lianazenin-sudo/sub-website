@@ -1,6 +1,6 @@
 /**
  * Auth session shape shared by web and mobile.
- * Cookie encoding and HMAC signing stay in the web app.
+ * Cookie encoding and HMAC signing stay in the website app.
  */
 import { z } from "zod";
 
