@@ -1,18 +1,13 @@
 import { createHmac, timingSafeEqual } from "crypto";
 import { cookies } from "next/headers";
-import { z } from "zod";
+import {
+  authSessionSchema,
+  type AuthSession,
+} from "@trace/shared";
+
+export { authSessionSchema, type AuthSession };
 
 export const SESSION_COOKIE = "trace_session";
-
-export const authSessionSchema = z.object({
-  provider: z.enum(["google", "email"]),
-  email: z.string().email(),
-  name: z.string().optional(),
-  username: z.string().optional(),
-  picture: z.string().url().optional().or(z.literal("")),
-});
-
-export type AuthSession = z.infer<typeof authSessionSchema>;
 
 function getSessionSecret(): string {
   const secret = process.env.AUTH_SESSION_SECRET;
