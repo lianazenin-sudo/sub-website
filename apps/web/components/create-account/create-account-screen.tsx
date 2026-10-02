@@ -7,14 +7,7 @@ import { ChevronLeft, Loader2 } from "lucide-react";
 import { StepProgress } from "@/components/ui/step-progress";
 import { useGoogleSignIn } from "@/hooks/use-google-sign-in";
 import { cn } from "@/lib/utils";
-
-const FEATURES = [
-  "Find your subscriptions automatically",
-  "Detect prices and renewal dates",
-  "Identify subscriptions across multiple email",
-  "Alert you about renewals and price changes",
-  "Help you manage or cancel subscriptions",
-] as const;
+import { CREATE_ACCOUNT_FEATURES as FEATURES } from "@trace/shared";
 
 export function CreateAccountScreen() {
   const router = useRouter();

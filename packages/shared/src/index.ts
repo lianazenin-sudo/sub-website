@@ -24,3 +24,10 @@ export {
   buildScanningChecklist,
   displayNameFromSession,
 } from "./scanning/steps";
+export { CREATE_ACCOUNT_FEATURES } from "./copy/create-account";
+export {
+  ROUTES,
+  ONBOARDING_FLOW,
+  type AppRoute,
+  type OnboardingFlowRoute,
+} from "./routes";
