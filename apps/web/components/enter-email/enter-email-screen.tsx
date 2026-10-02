@@ -7,6 +7,7 @@ import { ChevronLeft, Loader2 } from "lucide-react";
 import { StepProgress } from "@/components/ui/step-progress";
 import { isValidEmail } from "@/lib/auth/email";
 import { cn } from "@/lib/utils";
+import { ROUTES } from "@trace/shared";
 
 export function EnterEmailScreen() {
   const router = useRouter();
@@ -41,7 +42,7 @@ export function EnterEmailScreen() {
         throw new Error("Unable to save email");
       }
 
-      router.push("/create-username");
+      router.push(ROUTES.createUsername);
     } catch {
       setSubmitError("Something went wrong. Please try again.");
       setIsSubmitting(false);
@@ -53,7 +54,7 @@ export function EnterEmailScreen() {
       <header className="relative flex items-center justify-center">
         <button
           type="button"
-          onClick={() => router.push("/create-account")}
+          onClick={() => router.push(ROUTES.createAccount)}
           aria-label="Go back"
           className="absolute left-0 flex size-12 items-center justify-center rounded-full bg-[#323232] text-white transition-opacity hover:opacity-90"
         >
@@ -131,7 +132,7 @@ export function EnterEmailScreen() {
             Next
           </button>
           <Link
-            href="/create-username"
+            href={ROUTES.createUsername}
             className="font-sans text-sm text-[#888888] transition-opacity hover:opacity-80"
           >
             Skip for now

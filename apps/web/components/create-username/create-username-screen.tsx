@@ -8,6 +8,7 @@ import { StepProgress } from "@/components/ui/step-progress";
 import { useUsernameAvailability } from "@/hooks/use-username-availability";
 import { sanitizeUsernameInput } from "@/lib/username";
 import { cn } from "@/lib/utils";
+import { ROUTES } from "@trace/shared";
 
 export function CreateUsernameScreen() {
   const router = useRouter();
@@ -32,7 +33,7 @@ export function CreateUsernameScreen() {
         throw new Error("Unable to save username");
       }
 
-      router.push("/scanning");
+      router.push(ROUTES.scanning);
     } catch {
       setIsSaving(false);
     }
@@ -147,7 +148,7 @@ export function CreateUsernameScreen() {
             Next
           </button>
           <Link
-            href="/scanning"
+            href={ROUTES.scanning}
             className="font-sans text-sm text-[#888888] transition-opacity hover:opacity-80"
           >
             Skip for now

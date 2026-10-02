@@ -7,6 +7,7 @@ import { ChevronLeft, Loader2 } from "lucide-react";
 import { useGoogleSignIn } from "@/hooks/use-google-sign-in";
 import { isValidEmail } from "@/lib/auth/email";
 import { cn } from "@/lib/utils";
+import { ROUTES } from "@trace/shared";
 
 export function WelcomeBackScreen() {
   const router = useRouter();
@@ -69,7 +70,7 @@ export function WelcomeBackScreen() {
       <header className="relative flex items-center">
         <button
           type="button"
-          onClick={() => router.push("/onboarding")}
+          onClick={() => router.push(ROUTES.onboarding)}
           aria-label="Go back"
           className="flex size-12 items-center justify-center rounded-full bg-[#323232] text-white transition-opacity hover:opacity-90"
         >

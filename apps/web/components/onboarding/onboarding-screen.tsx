@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { TraceLogo } from "@/components/brand/trace-logo";
+import { ROUTES } from "@trace/shared";
 
 export function OnboardingScreen() {
   return (
@@ -25,13 +26,13 @@ export function OnboardingScreen() {
 
       <div className="flex w-full max-w-sm flex-col items-center gap-4">
         <Link
-          href="/create-account"
+          href={ROUTES.createAccount}
           className="flex h-[60px] w-full items-center justify-center rounded-full bg-[#A4A1FF] font-sans text-[14px] font-semibold text-black transition-opacity hover:opacity-90 active:opacity-80"
         >
           Create New Account
         </Link>
         <Link
-          href="/welcome-back"
+          href={ROUTES.welcomeBack}
           className="flex h-[60px] w-full items-center justify-center rounded-full bg-[#323232] font-sans text-[14px] font-semibold text-white transition-opacity hover:opacity-90 active:opacity-80"
         >
           Already a member

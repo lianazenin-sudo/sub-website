@@ -7,7 +7,10 @@ import { ChevronLeft, Loader2 } from "lucide-react";
 import { StepProgress } from "@/components/ui/step-progress";
 import { useGoogleSignIn } from "@/hooks/use-google-sign-in";
 import { cn } from "@/lib/utils";
-import { CREATE_ACCOUNT_FEATURES as FEATURES } from "@trace/shared";
+import {
+  CREATE_ACCOUNT_FEATURES as FEATURES,
+  ROUTES,
+} from "@trace/shared";
 
 export function CreateAccountScreen() {
   const router = useRouter();
@@ -16,7 +19,7 @@ export function CreateAccountScreen() {
   const { signIn, isLoading } = useGoogleSignIn({
     onSuccess: () => {
       setErrorMessage(null);
-      router.push("/create-username");
+      router.push(ROUTES.createUsername);
     },
     onError: (message) => {
       setErrorMessage(message);
@@ -28,7 +31,7 @@ export function CreateAccountScreen() {
       <header className="relative flex items-center justify-center">
         <button
           type="button"
-          onClick={() => router.push("/onboarding")}
+          onClick={() => router.push(ROUTES.onboarding)}
           aria-label="Go back"
           className="absolute left-0 flex size-12 items-center justify-center rounded-full bg-[#323232] text-white transition-opacity hover:opacity-90"
         >
@@ -113,7 +116,7 @@ export function CreateAccountScreen() {
             type="button"
             onClick={() => {
               setErrorMessage(null);
-              router.push("/enter-email");
+              router.push(ROUTES.enterEmail);
             }}
             className="flex h-[60px] w-full items-center justify-center rounded-full border border-[#4A4A4A] bg-[#323232] font-sans text-[14px] font-semibold text-white transition-opacity hover:opacity-90 active:opacity-80"
           >

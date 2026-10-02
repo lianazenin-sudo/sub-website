@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { ROUTES } from "@trace/shared";
 
 const SPLASH_DURATION_MS = 4000;
 
@@ -11,7 +12,7 @@ export function SplashScreen() {
 
   useEffect(() => {
     const timeoutId = window.setTimeout(() => {
-      router.push("/onboarding");
+      router.push(ROUTES.onboarding);
     }, SPLASH_DURATION_MS);
 
     return () => window.clearTimeout(timeoutId);
