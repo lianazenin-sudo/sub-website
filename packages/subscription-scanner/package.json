@@ -1,13 +1,14 @@
 {
-  "name": "subscription-scanner",
+  "name": "@trace/subscription-scanner",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "description": "Server-side subscription email scanning engine",
+  "main": "src/index.ts",
   "directories": {
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tsx --test tests/*.test.ts"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +22,6 @@
     "@types/node": "26.6.3",
     "@types/pg": "8.23.1",
     "tsx": "4.23.15",
-    "typescript": "7.0.2"
+    "typescript": "5.9.3"
   }
 }
