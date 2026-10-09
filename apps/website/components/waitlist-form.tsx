@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useState } from "react";
+import Image from "next/image";
 import { isValidEmail } from "@/lib/auth/email";
 import { cn } from "@/lib/utils";
 import { focusRing } from "@/lib/motion";
@@ -24,6 +25,12 @@ export function WaitlistForm({ className }: WaitlistFormProps) {
     const website = String(new FormData(event.currentTarget).get("website") ?? "");
     const value = email.trim();
 
+    if (!value) {
+      setPhase("idle");
+      setMessage("Enter your email address");
+      return;
+    }
+
     if (!isValidEmail(value)) {
       setPhase("idle");
       setMessage("Enter a valid email address");
@@ -39,11 +46,11 @@ export function WaitlistForm({ className }: WaitlistFormProps) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: value, website }),
       });
-      const result = (await response.json()) as { ok?: boolean };
+      const result = (await response.json()) as { ok?: boolean; error?: string };
 
       if (!response.ok || !result.ok) {
         setPhase("error");
-        setMessage("Something went wrong, please try again");
+        setMessage(result.error || "Something went wrong, please try again");
         return;
       }
 
@@ -57,15 +64,42 @@ export function WaitlistForm({ className }: WaitlistFormProps) {
 
   if (phase === "success") {
     return (
-      <p role="status" aria-live="polite" className="text-sm font-medium text-white sm:text-base">
-        You&apos;re on the list! 🎉
-      </p>
+      <div
+        role="status"
+        aria-live="polite"
+        className={cn(
+          "flex w-[min(100%,28rem)] items-center gap-3 rounded-[1.75rem] bg-ink-card px-3 py-2.5 text-left sm:gap-4 sm:px-4 sm:py-3",
+          className,
+        )}
+      >
+        <Image
+          src="/assets/waitlist-mascot.png"
+          alt=""
+          width={62}
+          height={54}
+          className="h-14 w-auto shrink-0"
+        />
+        <p className="text-sm font-semibold leading-snug tracking-[-0.02em] text-white sm:text-[15px]">
+          Congratulations! You have joined the squad
+        </p>
+      </div>
     );
   }
 
   const busy = phase === "loading";
 
   return (
+    <>
+    <style>{`
+      .waitlist-email:-webkit-autofill,
+      .waitlist-email:-webkit-autofill:hover,
+      .waitlist-email:-webkit-autofill:focus {
+        -webkit-box-shadow: 0 0 0 1000px var(--color-waitlist) inset;
+        -webkit-text-fill-color: var(--color-waitlist-ink);
+        caret-color: var(--color-waitlist-ink);
+        transition: background-color 9999s ease-in-out 0s;
+      }
+    `}</style>
     <form
       onSubmit={onSubmit}
       noValidate
@@ -101,7 +135,7 @@ export function WaitlistForm({ className }: WaitlistFormProps) {
               setMessage("");
             }
           }}
-          className="min-w-0 flex-1 bg-transparent text-[13px] text-waitlist-ink outline-none placeholder:text-waitlist-ink/55 disabled:opacity-60 sm:text-sm"
+          className="waitlist-email min-w-0 flex-1 border-none bg-transparent text-[13px] text-waitlist-ink shadow-none outline-none placeholder:text-waitlist-ink/55 caret-waitlist-ink selection:bg-waitlist-ink/15 selection:text-waitlist-ink disabled:opacity-60 sm:text-sm"
         />
         <input
           type="text"
@@ -133,5 +167,6 @@ export function WaitlistForm({ className }: WaitlistFormProps) {
         {message}
       </p>
     </form>
+    </>
   );
 }

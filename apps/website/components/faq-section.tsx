@@ -28,7 +28,7 @@ export function FaqSection() {
       ref={ref}
       id="faq"
       aria-labelledby="faq-heading"
-      className="site-wrap scroll-mt-24 py-16 md:py-24"
+      className="site-wrap scroll-mt-24"
     >
       <div className="mx-auto max-w-3xl text-center" data-reveal>
         <h2

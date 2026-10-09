@@ -6,6 +6,7 @@ import { Hero } from "@/components/hero";
 import { FeatureSection } from "@/components/feature-section";
 import { PricingSection } from "@/components/pricing-section";
 import { FaqSection } from "@/components/faq-section";
+import { PayingSection } from "@/components/paying-section";
 import { CtaSection } from "@/components/cta-section";
 import { Footer } from "@/components/footer";
 
@@ -14,9 +15,10 @@ export function HomePage() {
     <SmoothScroll>
       <div id="top" className="min-h-dvh bg-ink text-white selection:bg-lilac selection:text-ink">
         <Navbar />
-        <main>
+        <main className="flex flex-col gap-14 md:gap-20">
           <Hero />
           <FeatureSection />
+          <PayingSection />
           <PricingSection />
           <FaqSection />
           <CtaSection />

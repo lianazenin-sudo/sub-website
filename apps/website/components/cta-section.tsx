@@ -8,7 +8,7 @@ export function CtaSection() {
   const ref = useReveal<HTMLElement>();
 
   return (
-    <section ref={ref} aria-labelledby="cta-heading" className="site-wrap py-8 md:py-12">
+    <section ref={ref} aria-labelledby="cta-heading" className="site-wrap">
       <div
         data-reveal
         className="relative overflow-hidden rounded-[2rem] bg-[#7a6bc4] px-6 py-16 text-center sm:px-10 sm:py-20 md:py-24"

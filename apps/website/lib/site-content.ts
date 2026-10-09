@@ -100,7 +100,6 @@ export const footerColumns = [
     links: [
       { href: "/contact", label: "Contact" },
       { href: "/privacy-policy", label: "Privacy" },
-      { href: "/#contact", label: "Terms" },
     ],
   },
 ];

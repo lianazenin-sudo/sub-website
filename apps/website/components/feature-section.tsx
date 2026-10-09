@@ -17,7 +17,7 @@ export function FeatureSection() {
       ref={ref}
       id="features"
       aria-labelledby="features-heading"
-      className="site-wrap scroll-mt-24 py-16 md:py-24"
+      className="site-wrap scroll-mt-24"
     >
       <div className="flex justify-center" data-reveal>
         <SectionLabel as="h2" id="features-heading">
@@ -76,8 +76,8 @@ export function FeatureSection() {
                       className="h-auto w-[78%] max-w-[240px] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
                     />
                   </div>
-                  <MagneticButton href="#pricing" className="w-full">
-                    Get alerts
+                  <MagneticButton href="https://discord.gg/UepYWjjMK" className="w-full">
+                    Join Discord Server
                   </MagneticButton>
                 </>
               ) : null}

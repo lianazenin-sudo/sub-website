@@ -20,7 +20,7 @@ export function PricingSection() {
       ref={ref}
       id="pricing"
       aria-labelledby="pricing-heading"
-      className="site-wrap scroll-mt-24 py-16 md:py-28"
+      className="site-wrap scroll-mt-24"
     >
       <div className="flex flex-col items-center text-center" data-reveal>
         <SectionLabel>Pricing</SectionLabel>

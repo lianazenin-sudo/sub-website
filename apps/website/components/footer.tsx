@@ -27,7 +27,7 @@ export function Footer() {
   };
 
   return (
-    <footer id="contact" className="relative min-h-[26rem] overflow-hidden pt-16 md:min-h-[480px]">
+    <footer id="contact" className="relative overflow-hidden pt-14 pb-24 md:pt-20 md:pb-28">
       <div className="site-wrap relative z-10 grid gap-12 pb-10 md:grid-cols-[1fr_1.1fr] md:items-start">
         <div className="grid grid-cols-2 gap-8">
           {footerColumns.map((column) => (
@@ -96,11 +96,11 @@ export function Footer() {
         </form>
       </div>
 
-      <p className="relative z-10 pb-2 text-center text-xs text-fog">© 2026 Trace</p>
+      <p className="relative z-10 pt-10 text-center text-xs text-fog">© 2026 Trace</p>
 
       <p
         aria-hidden="true"
-        className="pointer-events-none absolute bottom-0 left-1/2 z-0 -translate-x-1/2 translate-y-[42%] font-logo text-[38vw] leading-[0.8] whitespace-nowrap text-[#242424] select-none"
+        className="pointer-events-none absolute bottom-0 left-1/2 z-0 -translate-x-1/2 translate-y-[88%] font-logo text-[34vw] leading-[0.8] whitespace-nowrap text-[#242424] select-none"
       >
         TRACE
       </p>

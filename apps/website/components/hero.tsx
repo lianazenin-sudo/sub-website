@@ -81,14 +81,14 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="site-wrap relative z-10 flex min-h-[28rem] flex-col items-center justify-center px-4 py-20 text-center sm:min-h-[32rem] md:py-28">
+      <div className="site-wrap relative z-10 flex min-h-[28rem] flex-col items-center justify-center px-4 pt-20 pb-0 text-center sm:min-h-[32rem] md:pt-28">
         <motion.p
-          className="text-[12px] font-semibold tracking-[0.18em] text-white/70 uppercase"
+          className="text-[12px] font-semibold tracking-[0.04em] text-white/70"
           initial={reduce ? false : { opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: duration.base, delay: 0.05, ease: easeOut }}
         >
-          Household · Unlimited
+          Will be available on iOS and Android
         </motion.p>
 
         <h1

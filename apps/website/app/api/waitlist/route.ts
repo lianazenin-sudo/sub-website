@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
+import { Resend } from "resend";
 import { z } from "zod";
 import { emailSchema } from "@/lib/auth/email";
+import { releaseWaitlistEmail, reserveWaitlistEmail } from "@/lib/waitlist-store";
 
 const bodySchema = z.object({
   email: emailSchema,
@@ -31,37 +33,52 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: true });
   }
 
-  const webhookUrl = process.env.MAKE_WEBHOOK_URL;
-  if (!webhookUrl) {
+  const apiKey = process.env.RESEND_API_KEY;
+  const fromAddress = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
+  const fromEmail = fromAddress.match(/<([^>]+)>/)?.[1]?.trim() || fromAddress.trim();
+  const from = `Trace <${fromEmail}>`;
+  const to = process.env.WAITLIST_TO_EMAIL;
+  if (!apiKey || !to) {
     return NextResponse.json(
       { ok: false, error: "Waitlist is not configured" },
       { status: 500 },
     );
   }
 
+  const email = parsed.data.email;
+  if (reserveWaitlistEmail(email) === "duplicate") {
+    return NextResponse.json(
+      { ok: false, error: "This email is already in our waitlist" },
+      { status: 409 },
+    );
+  }
+
+  const resend = new Resend(apiKey);
+
   try {
-    const response = await fetch(webhookUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: parsed.data.email,
-        source: "landing-page-waitlist",
-        submittedAt: new Date().toISOString(),
-      }),
-    });
+    for (let attempt = 0; attempt < 2; attempt++) {
+      const { error } = await resend.emails.send({
+        from,
+        to: [to],
+        template: {
+          id: "waitlist-confirmation",
+        },
+      });
 
-    // Make.com answers with plain text ("Accepted"), not JSON.
-    await response.text();
+      if (!error) {
+        return NextResponse.json({ ok: true });
+      }
 
-    if (!response.ok) {
-      return NextResponse.json(
-        { ok: false, error: "Something went wrong, please try again" },
-        { status: 502 },
-      );
+      console.error("Resend waitlist error", error);
     }
 
-    return NextResponse.json({ ok: true });
+    releaseWaitlistEmail(email);
+    return NextResponse.json(
+      { ok: false, error: "Something went wrong, please try again" },
+      { status: 502 },
+    );
   } catch {
+    releaseWaitlistEmail(email);
     return NextResponse.json(
       { ok: false, error: "Something went wrong, please try again" },
       { status: 502 },
