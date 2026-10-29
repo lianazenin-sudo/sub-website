@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useId, useRef, useState } from "react";
 import Image from "next/image";
 import { isValidEmail } from "@/lib/auth/email";
 import { cn } from "@/lib/utils";
@@ -10,17 +10,19 @@ type Phase = "idle" | "loading" | "success" | "error";
 
 type WaitlistFormProps = {
   className?: string;
+  source?: string;
 };
 
-export function WaitlistForm({ className }: WaitlistFormProps) {
+export function WaitlistForm({ className, source = "landing-waitlist" }: WaitlistFormProps) {
   const messageId = useId();
+  const submitting = useRef(false);
   const [email, setEmail] = useState("");
   const [phase, setPhase] = useState<Phase>("idle");
   const [message, setMessage] = useState("");
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (phase === "loading" || phase === "success") return;
+    if (submitting.current || phase === "success") return;
 
     const website = String(new FormData(event.currentTarget).get("website") ?? "");
     const value = email.trim();
@@ -37,6 +39,7 @@ export function WaitlistForm({ className }: WaitlistFormProps) {
       return;
     }
 
+    submitting.current = true;
     setPhase("loading");
     setMessage("");
 
@@ -44,7 +47,7 @@ export function WaitlistForm({ className }: WaitlistFormProps) {
       const response = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: value, website }),
+        body: JSON.stringify({ email: value, source, website }),
       });
       const result = (await response.json()) as { ok?: boolean; error?: string };
 
@@ -59,6 +62,8 @@ export function WaitlistForm({ className }: WaitlistFormProps) {
     } catch {
       setPhase("error");
       setMessage("Something went wrong, please try again");
+    } finally {
+      submitting.current = false;
     }
   }
 

@@ -25,13 +25,17 @@ export function FeatureSection() {
         </SectionLabel>
       </div>
 
-      <div className="mt-10 grid gap-5 lg:grid-cols-3 lg:gap-6">
+      <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
         {featureCards.map((card) => (
-          <div key={card.id} data-reveal>
+          <div
+            key={card.id}
+            data-reveal
+            className={card.kind === "spend" ? "md:col-span-2 lg:col-span-1" : undefined}
+          >
           <motion.article
             whileHover={reduce ? undefined : { y: -8, scale: 1.02 }}
             transition={{ duration: duration.fast, ease: easeOut }}
-            className="group relative flex min-h-[32rem] flex-col overflow-hidden rounded-card p-6 sm:p-7"
+            className="group relative flex h-full min-h-[26rem] flex-col lg:min-h-[32rem] overflow-hidden rounded-card p-6 sm:p-7"
           >
             {card.kind === "alerts" ? (
               <div className="absolute inset-0 bg-ink-card" aria-hidden="true" />

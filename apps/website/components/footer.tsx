@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { isValidEmail } from "@/lib/auth/email";
 import { footerColumns } from "@/lib/site-content";
 import { focusRing } from "@/lib/motion";
 import { cn } from "@/lib/utils";
@@ -10,6 +11,41 @@ export function Footer() {
   const lenis = useLenis();
   const [email, setEmail] = useState("");
   const [done, setDone] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const submitting = useRef(false);
+
+  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const value = email.trim();
+    if (submitting.current || !value) return;
+    if (!isValidEmail(value)) {
+      setError("Enter a valid email address");
+      return;
+    }
+    submitting.current = true;
+    setBusy(true);
+    setError("");
+    try {
+      const response = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: value, source: "footer" }),
+      });
+      const result = (await response.json()) as { ok?: boolean; error?: string };
+      if (!response.ok || !result.ok) {
+        setError(result.error || "Something went wrong, please try again");
+        return;
+      }
+      setEmail("");
+      setDone(true);
+    } catch {
+      setError("Something went wrong, please try again");
+    } finally {
+      submitting.current = false;
+      setBusy(false);
+    }
+  }
 
   const go = (href: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
     const hashAt = href.indexOf("#");
@@ -52,11 +88,8 @@ export function Footer() {
 
         <form
           className="md:justify-self-end md:max-w-md md:w-full"
-          onSubmit={(event) => {
-            event.preventDefault();
-            if (!email.trim()) return;
-            setDone(true);
-          }}
+          noValidate
+          onSubmit={onSubmit}
         >
           <label htmlFor="footer-email" className="text-sm font-semibold text-white">
             Stay in the loop
@@ -67,9 +100,12 @@ export function Footer() {
               type="email"
               required
               value={email}
+              disabled={busy}
+              aria-invalid={Boolean(error)}
               onChange={(event) => {
                 setEmail(event.target.value);
                 setDone(false);
+                setError("");
               }}
               placeholder="Email address"
               autoComplete="email"
@@ -80,16 +116,19 @@ export function Footer() {
             />
             <button
               type="submit"
+              disabled={busy}
               className={cn(
-                "absolute top-1.5 right-1.5 h-11 rounded-full bg-lilac px-5 text-sm font-semibold text-ink",
+                "absolute top-1.5 right-1.5 h-11 rounded-full bg-lilac px-5 text-sm font-semibold text-ink disabled:cursor-not-allowed disabled:opacity-70",
                 focusRing,
               )}
             >
-              Sign up
+              {busy ? "Signing up..." : "Sign up"}
             </button>
           </div>
           <p className="mt-3 text-xs leading-relaxed text-fog" role="status">
-            {done
+            {error
+              ? error
+              : done
               ? "You're on the list. We'll write when there's something worth opening."
               : "Product notes only. Unsubscribe whenever you want."}
           </p>

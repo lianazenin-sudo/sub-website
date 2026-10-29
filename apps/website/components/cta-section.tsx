@@ -42,7 +42,7 @@ export function CtaSection() {
             </span>
           </h2>
           <div className="mt-8 flex justify-center">
-            <WaitlistForm />
+            <WaitlistForm source="cta" />
           </div>
         </div>
       </div>

@@ -5,6 +5,10 @@ export const navLinks = [
   { href: "/contact", label: "Contact" },
 ] as const;
 
+/** Discord community invite. Override with NEXT_PUBLIC_DISCORD_INVITE_URL. */
+export const discordInviteUrl =
+  process.env.NEXT_PUBLIC_DISCORD_INVITE_URL || "https://discord.gg/UepYWjjMK";
+
 export const featureCards = [
   {
     id: "subscriptions",
@@ -44,7 +48,7 @@ export const plans = {
     label: "Yearly",
     period: "1 Year",
     billing: "Billed yearly",
-    price: "$49.99",
+    price: "$12.99",
   },
 } as const;
 

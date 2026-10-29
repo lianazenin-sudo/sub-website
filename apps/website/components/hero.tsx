@@ -61,7 +61,8 @@ export function Hero() {
       aria-labelledby="hero-heading"
     >
       <div className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2">
-        <div ref={scrollRef} className="mx-auto w-[min(1100px,130%)]">
+        <div className="relative left-1/2 w-[min(1100px,130%)] -translate-x-1/2">
+        <div ref={scrollRef}>
           <div ref={pointerRef}>
           <motion.div
             initial={reduce ? false : { opacity: 0, scale: 0.96 }}
@@ -79,9 +80,10 @@ export function Hero() {
           </motion.div>
           </div>
         </div>
+        </div>
       </div>
 
-      <div className="site-wrap relative z-10 flex min-h-[28rem] flex-col items-center justify-center px-4 pt-20 pb-0 text-center sm:min-h-[32rem] md:pt-28">
+      <div className="site-wrap relative z-10 flex min-h-[28rem] flex-col items-center justify-center pt-20 sm:px-4 pb-0 text-center sm:min-h-[32rem] md:pt-28">
         <motion.p
           className="text-[12px] font-semibold tracking-[0.04em] text-white/70"
           initial={reduce ? false : { opacity: 0, y: 12 }}
@@ -109,7 +111,7 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: duration.base, delay: 0.7, ease: easeOut }}
         >
-          <WaitlistForm />
+          <WaitlistForm source="hero" />
         </motion.div>
       </div>
     </section>

@@ -7,6 +7,8 @@ import { duration, easeOut, focusRing } from "@/lib/motion";
 
 type MagneticButtonProps = {
   href?: string;
+  /** Opens the link in a new tab when true. */
+  external?: boolean;
   type?: "button" | "submit";
   variant?: "lilac" | "white";
   className?: string;
@@ -22,6 +24,7 @@ const variants = {
 /** Scale plus a slight pull toward the pointer. Motion stays on transform. */
 export function MagneticButton({
   href,
+  external = false,
   type = "button",
   variant = "lilac",
   className,
@@ -71,6 +74,8 @@ export function MagneticButton({
     return (
       <motion.a
         href={href}
+        target={external ? "_blank" : undefined}
+        rel={external ? "noopener noreferrer" : undefined}
         ref={ref as React.Ref<HTMLAnchorElement>}
         onClick={onClick as React.MouseEventHandler<HTMLAnchorElement>}
         {...motionProps}

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
-import { navLinks } from "@/lib/site-content";
+import { discordInviteUrl, navLinks } from "@/lib/site-content";
 import { duration, easeOut, focusRing } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { useLenis } from "@/hooks/use-lenis";
@@ -126,8 +126,12 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <MagneticButton href="/onboarding" className="hidden h-11 px-6 text-sm sm:inline-flex">
-            See Demo
+          <MagneticButton
+            href={discordInviteUrl}
+            external
+            className="hidden h-11 px-6 text-sm sm:inline-flex"
+          >
+            Join Discord
           </MagneticButton>
           <button
             ref={menuButtonRef}
@@ -192,11 +196,12 @@ export function Navbar() {
                   </a>
                 ))}
                 <MagneticButton
-                  href="/onboarding"
+                  href={discordInviteUrl}
+                  external
                   onClick={() => setOpen(false)}
                   className="mt-4 h-12 px-10 text-[15px]"
                 >
-                  See Demo
+                  Join Discord
                 </MagneticButton>
               </nav>
             </motion.div>,

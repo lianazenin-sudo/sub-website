@@ -188,6 +188,15 @@
   }
 }
 
+/* iOS Safari zooms the page when a focused field is under 16px. */
+@media (max-width: 639px) {
+  input,
+  select,
+  textarea {
+    font-size: max(16px, 1em);
+  }
+}
+
 .site-link {
   background-image: linear-gradient(currentColor, currentColor);
   background-position: 0 100%;

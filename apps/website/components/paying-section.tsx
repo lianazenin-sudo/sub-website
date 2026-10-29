@@ -4,6 +4,10 @@ import Image from "next/image";
 import { MagneticButton } from "@/components/magnetic-button";
 import { SectionLabel } from "@/components/section-label";
 import { useReveal } from "@/hooks/use-reveal";
+import { cn } from "@/lib/utils";
+
+/** One screenshot: a snap slide on phones and tablets, a grid cell on desktop. */
+const slide = "w-[78%] max-w-[340px] shrink-0 snap-center sm:w-[44%] lg:w-auto lg:max-w-none lg:min-w-0";
 
 const phones = {
   dashboard: {
@@ -54,17 +58,27 @@ export function PayingSection() {
             </div>
           </div>
 
-          <div className="order-2 min-w-0 lg:col-start-1 lg:row-start-1">
+          <div
+            className={cn(
+              "order-2 -mx-6 flex snap-x snap-mandatory items-center gap-4 overflow-x-auto scroll-px-6 px-6 pb-2",
+              "[scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+              "lg:contents",
+            )}
+            role="region"
+            aria-label="App screenshots"
+            tabIndex={0}
+          >
+          <div className={cn(slide, "order-2 lg:col-start-1 lg:row-start-1")}>
             <PhoneShot {...phones.dashboard} />
           </div>
-          <div className="order-3 min-w-0 lg:col-start-3 lg:row-start-1">
+          <div className={cn(slide, "order-3 lg:col-start-3 lg:row-start-1")}>
             <PhoneShot {...phones.inboxes} />
           </div>
-          <div className="order-4 min-w-0 lg:col-start-1 lg:row-start-2">
+          <div className={cn(slide, "order-4 lg:col-start-1 lg:row-start-2")}>
             <PhoneShot {...phones.disney} />
           </div>
 
-          <div className="order-5 min-w-0 lg:col-start-2 lg:row-start-2">
+          <div className={cn(slide, "order-5 lg:col-start-2 lg:row-start-2")}>
             <Image
               src="/assets/paying/alerts.png"
               alt="Alerts for a trial ending, an unused subscription, a Netflix renewal, a new charge, and a confirmed cancellation."
@@ -75,8 +89,9 @@ export function PayingSection() {
             />
           </div>
 
-          <div className="order-6 min-w-0 lg:col-start-3 lg:row-start-2">
+          <div className={cn(slide, "order-6 lg:col-start-3 lg:row-start-2")}>
             <PhoneShot {...phones.purchased} />
+          </div>
           </div>
         </div>
       </div>

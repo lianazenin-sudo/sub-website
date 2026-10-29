@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { DatabaseSync } from "node:sqlite";
+import type { DatabaseSync } from "node:sqlite";
 
 let database: DatabaseSync | null = null;
 
@@ -10,8 +10,11 @@ function databasePath() {
   return path.join(root, "data", "waitlist.sqlite");
 }
 
-function db() {
+// Loaded on first use: node:sqlite is missing on older Node runtimes, and a
+// top-level import would crash the whole route even when Supabase is used.
+async function db() {
   if (database) return database;
+  const { DatabaseSync } = await import("node:sqlite");
   const file = databasePath();
   fs.mkdirSync(path.dirname(file), { recursive: true });
   database = new DatabaseSync(file);
@@ -29,8 +32,8 @@ function normalize(email: string) {
 }
 
 /** Inserts the address. Returns "duplicate" when that email is already stored. */
-export function reserveWaitlistEmail(email: string): "created" | "duplicate" {
-  const result = db()
+export async function reserveWaitlistEmail(email: string): Promise<"created" | "duplicate"> {
+  const result = (await db())
     .prepare(
       "insert into waitlist_signups (email, created_at) values (?, ?) on conflict(email) do nothing",
     )
@@ -39,6 +42,6 @@ export function reserveWaitlistEmail(email: string): "created" | "duplicate" {
 }
 
 /** Removes a reserved address when the confirmation email could not be sent. */
-export function releaseWaitlistEmail(email: string) {
-  db().prepare("delete from waitlist_signups where email = ?").run(normalize(email));
+export async function releaseWaitlistEmail(email: string) {
+  (await db()).prepare("delete from waitlist_signups where email = ?").run(normalize(email));
 }
