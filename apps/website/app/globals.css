@@ -175,6 +175,19 @@
   }
 }
 
+/* The homepage is composed at 1440. On wider screens, scale that frame
+   so the site keeps the same proportion instead of sitting smaller in the window. */
+@media (min-width: 1440px) {
+  html {
+    overflow-x: clip;
+  }
+
+  body {
+    width: 1440px;
+    zoom: calc(100vw / 1440px);
+  }
+}
+
 .site-link {
   background-image: linear-gradient(currentColor, currentColor);
   background-position: 0 100%;
