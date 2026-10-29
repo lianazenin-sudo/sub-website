@@ -54,6 +54,29 @@ async function sendNotification(apiKey: string, to: string, email: string, sourc
   return false;
 }
 
+/**
+ * Sends the published "Waitlist Confirmation" Resend template to the person who
+ * joined. Sender and subject come from the template unless RESEND_FROM_EMAIL is set.
+ */
+async function sendConfirmation(apiKey: string, email: string) {
+  const resend = new Resend(apiKey);
+  const fromAddress = process.env.RESEND_FROM_EMAIL?.trim();
+  const fromEmail = fromAddress?.match(/<([^>]+)>/)?.[1]?.trim() || fromAddress;
+  const from = fromEmail ? `Trace <${fromEmail}>` : undefined;
+  const templateId = process.env.RESEND_WAITLIST_TEMPLATE_ID || "waitlist-confirmation";
+
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const { error } = await resend.emails.send(
+      { to: [email], template: { id: templateId }, ...(from ? { from } : {}) },
+      // Retries reuse the key, so a subscriber never gets the welcome email twice.
+      { idempotencyKey: `waitlist-confirmation/${email}` },
+    );
+    if (!error) return true;
+    console.error("Resend waitlist confirmation error", error);
+  }
+  return false;
+}
+
 export async function POST(request: Request) {
   let payload: unknown;
   try {
@@ -86,7 +109,8 @@ export async function POST(request: Request) {
   const hasRemote = Boolean(webhookUrl || (apiKey && to));
 
   // Supabase is the system of record when configured: the signup succeeds only
-  // once the row is inserted. Webhook and inbox alerts then run after the response.
+  // once the row is inserted. The welcome email, webhook and inbox alert then run
+  // after the response, so a slow or failed send never blocks or undoes a signup.
   const supabase = getSupabaseAdmin();
   if (supabase) {
     const { error } = await supabase.from("waitlist_signups").insert({ email, source });
@@ -103,6 +127,7 @@ export async function POST(request: Request) {
 
     after(async () => {
       const results = await Promise.allSettled([
+        apiKey ? sendConfirmation(apiKey, email) : Promise.resolve(true),
         webhookUrl ? sendToWebhook(webhookUrl, email, source) : Promise.resolve(true),
         apiKey && to ? sendNotification(apiKey, to, email, source) : Promise.resolve(true),
       ]);
