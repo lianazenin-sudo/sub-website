@@ -106,7 +106,7 @@ export function PricingSection() {
               {active.price}
             </p>
           </div>
-          <MagneticButton href="/create-account" className="mt-5 w-full">
+          <MagneticButton className="mt-5 w-full">
             Upgrade to Premium
           </MagneticButton>
         </div>
