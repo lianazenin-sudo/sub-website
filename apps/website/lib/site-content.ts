@@ -96,7 +96,6 @@ export const footerColumns = [
       { href: "/#features", label: "Features" },
       { href: "/#pricing", label: "Pricing" },
       { href: "/#faq", label: "FAQ" },
-      { href: "/onboarding", label: "Download" },
     ],
   },
   {

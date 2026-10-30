@@ -119,10 +119,10 @@ function ContactDialog({ onClose }: { onClose: () => void }) {
           website,
         }),
       });
-      const result = (await response.json()) as { ok?: boolean };
+      const result = (await response.json()) as { ok?: boolean; error?: string };
       if (!response.ok || !result.ok) {
         setPhase("error");
-        setStatus("Something went wrong, please try again");
+        setStatus(result.error || "Something went wrong, please try again");
         return;
       }
       setName("");
