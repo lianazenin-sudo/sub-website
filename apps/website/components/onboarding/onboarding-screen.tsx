@@ -40,11 +40,11 @@ export function OnboardingScreen() {
 
         <p className="mt-2 max-w-[17rem] text-center font-sans text-xs leading-relaxed text-[#888888]">
           By continuing, you agree to our{" "}
-          <Link href="#" className="text-[#A4A1FF]">
+          <Link href="/terms" className="text-[#A4A1FF]">
             Terms of Service
           </Link>{" "}
           and{" "}
-          <Link href="#" className="text-[#A4A1FF]">
+          <Link href="/privacy-policy" className="text-[#A4A1FF]">
             Privacy Policy
           </Link>
         </p>
