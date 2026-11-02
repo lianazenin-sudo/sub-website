@@ -63,7 +63,7 @@ export function Footer() {
   };
 
   return (
-    <footer id="contact" className="relative overflow-hidden pt-14 pb-24 md:pt-20 md:pb-28">
+    <footer id="contact" className="@container relative overflow-hidden pt-14 md:pt-20">
       <div className="site-wrap relative z-10 grid gap-12 pb-10 md:grid-cols-[1fr_1.1fr] md:items-start">
         <div className="grid grid-cols-2 gap-8">
           {footerColumns.map((column) => (
@@ -135,11 +135,14 @@ export function Footer() {
         </form>
       </div>
 
-      <p className="relative z-10 pt-10 text-center text-xs text-fog">© 2026 Trace</p>
+      {/* Bottom padding leaves room for the wordmark, which sits in the footer's lower band. */}
+      <p className="relative z-10 pt-10 pb-[max(6rem,21cqw)] text-center text-xs text-fog">© 2026 Trace</p>
 
+      {/* Sized in cqw (footer width), not vw: on wide screens the body is scaled up,
+          and vw sizing made the word wider than the window. */}
       <p
         aria-hidden="true"
-        className="pointer-events-none absolute bottom-0 left-1/2 z-0 -translate-x-1/2 translate-y-[88%] font-logo text-[34vw] leading-[0.8] whitespace-nowrap text-[#242424] select-none"
+        className="pointer-events-none absolute bottom-0 left-1/2 z-0 -translate-x-1/2 translate-y-[22%] font-logo text-[34cqw] leading-[0.8] whitespace-nowrap text-[#242424] select-none"
       >
         TRACE
       </p>

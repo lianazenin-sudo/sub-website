@@ -258,7 +258,7 @@ export const termsSections: readonly PolicySection[] = [
     blocks: [
       {
         type: "p",
-        text: "Questions about these terms can be sent to privacy@trace.app. You can also reach us from the contact link in the footer.",
+        text: "Questions about these terms can be sent to support@jointraceapp.com. You can also reach us from the contact link in the footer.",
       },
     ],
   },

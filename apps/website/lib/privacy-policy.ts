@@ -120,7 +120,7 @@ export const policySections = [
     blocks: [
       {
         type: "p" as const,
-        text: "Questions about this policy or your data can be sent to privacy@trace.app. You can also reach us from the contact link in the footer.",
+        text: "Questions about this policy or your data can be sent to support@jointraceapp.com. You can also reach us from the contact link in the footer.",
       },
     ],
   },
